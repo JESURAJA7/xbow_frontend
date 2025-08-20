@@ -46,7 +46,7 @@ api.interceptors.response.use(
 
 export const authAPI = {
   register: (userData: any) => api.post(`${API_BASE_URL}/auth/register`, userData),
-  login: (credentials: any) => api.post(`${API_BASE_URL}/api/auth/login`, credentials),
+  login: (credentials: any) => api.post(`${API_BASE_URL}/auth/login`, credentials),
   getProfile: () => api.get('/auth/me'),
 };
 
