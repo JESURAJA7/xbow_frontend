@@ -216,7 +216,7 @@ export const LoginPage: React.FC = () => {
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex justify-between items-center mb-6">
-                <h3 className="text-2xl font-bold text-slate-800">Select Demo Role</h3>
+                <h3 className="text-2xl font-bold text-slate-800">Select Role</h3>
                 <button
                   onClick={() => setShowDemoModal(false)}
                   className="text-slate-500 hover:text-slate-700 transition-colors"
@@ -250,7 +250,7 @@ export const LoginPage: React.FC = () => {
               </div>
 
               <div className="mt-6 text-center text-sm text-slate-500">
-                <p>All demo accounts use the same password: admin@4345</p>
+              
               </div>
             </motion.div>
           </motion.div>
