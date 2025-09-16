@@ -23,10 +23,14 @@ import { LoadMatchedVehiclesPage } from './screens/loadProvider/LoadMatchedVehic
 import { AdminLogin } from './Admin/auth/AdminLogin';
 import { AdminRegister } from './Admin/auth/AdminRegister';
 import { AdminProtectedRoute } from './Admin/auth/AdminProtectedRoute';
+<<<<<<< HEAD
 import { BiddingModal } from './screens/Bidding/BiddingModal';
 import { LiveBiddingPage } from './screens/Bidding/LiveBiddingPage';
 import { AnimatedFooter } from './components/layout/AnimatedFooter';
 import { BiddingMonitorPage } from './screens/Bidding/BiddingMonitorPage';
+=======
+
+>>>>>>> 1667499bf92cea8b02211dbceb461822a9ce5ec0
 // Protected Route Component
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { user, isLoading } = useAuth();
@@ -221,6 +225,7 @@ const AppContent: React.FC = () => {
           }
         />
 
+<<<<<<< HEAD
           <Route
           path="/live-bidding"
           element={
@@ -231,6 +236,8 @@ const AppContent: React.FC = () => {
           }
         />
 
+=======
+>>>>>>> 1667499bf92cea8b02211dbceb461822a9ce5ec0
         {/* <Route
           path="/bidding"
           element={
@@ -250,6 +257,7 @@ const AppContent: React.FC = () => {
             <ProtectedRoute>
               <Navbar />
               <LoadMatchedVehiclesPage />
+<<<<<<< HEAD
               <AnimatedFooter />
             </ProtectedRoute>
           }
@@ -260,6 +268,8 @@ const AppContent: React.FC = () => {
               <Navbar />
               <BiddingMonitorPage />
               <AnimatedFooter />
+=======
+>>>>>>> 1667499bf92cea8b02211dbceb461822a9ce5ec0
             </ProtectedRoute>
           }
         />

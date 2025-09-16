@@ -32,12 +32,18 @@ import { LoadTimeline } from '../../components/LoadTimeline';
 import { MessageModal } from '../../components/MessageModal';
 import { VehicleMatchingModal } from '../../components/vehicles/VehicleMatchingModal';
 import { RatingModal } from '../../components/Rating/RatingModal';
+<<<<<<< HEAD
 import { loadApplicationAPI } from '../../services/loadApplicationAPI';
+=======
+>>>>>>> 1667499bf92cea8b02211dbceb461822a9ce5ec0
 import { vehicleMatchingAPI } from '../../services/api';
 import toast from 'react-hot-toast';
 import { loadAPI } from '../../services/api';
 import { useNavigate } from 'react-router-dom';
+<<<<<<< HEAD
 import { CreateBiddingModal } from '../../components/Bidding/CreateBiddingModal';
+=======
+>>>>>>> 1667499bf92cea8b02211dbceb461822a9ce5ec0
 
 export const MyLoadsPage: React.FC = () => {
   const { user } = useAuth();
@@ -50,7 +56,10 @@ export const MyLoadsPage: React.FC = () => {
   const [isMessageModalOpen, setIsMessageModalOpen] = useState(false);
   const [isVehicleMatchingModalOpen, setIsVehicleMatchingModalOpen] = useState(false);
   const [isRatingModalOpen, setIsRatingModalOpen] = useState(false);
+<<<<<<< HEAD
   const [isCreateBiddingModalOpen, setIsCreateBiddingModalOpen] = useState(false);
+=======
+>>>>>>> 1667499bf92cea8b02211dbceb461822a9ce5ec0
   const [applications, setApplications] = useState<any[]>([]);
   const [assignedVehicle, setAssignedVehicle] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -165,7 +174,11 @@ export const MyLoadsPage: React.FC = () => {
 
   const updateLoadStatus = async (loadId: string, newStatus: string) => {
     try {
+<<<<<<< HEAD
       const response = await loadApplicationAPI.updateLoadStatus(loadId, newStatus);
+=======
+      const response = await loadAPI.updateLoadStatus(loadId, newStatus);
+>>>>>>> 1667499bf92cea8b02211dbceb461822a9ce5ec0
       
       if (response.data.success) {
         toast.success('Load status updated successfully');
@@ -191,9 +204,16 @@ export const MyLoadsPage: React.FC = () => {
 
   const fetchLoadApplications = async (loadId: string) => {
     try {
+<<<<<<< HEAD
       const response = await loadApplicationAPI.getLoadApplications(loadId);
       if (response.data.success) {
         setApplications(response.data.data);
+=======
+      const response = await loadAPI.getLoadApplications(loadId);
+      if (response.data.success) {
+        setApplications(response.data.data);
+        console.log('Fetched applications:', response.data.data);
+>>>>>>> 1667499bf92cea8b02211dbceb461822a9ce5ec0
       }
     } catch (error) {
       console.error('Error fetching applications:', error);
@@ -210,7 +230,11 @@ export const MyLoadsPage: React.FC = () => {
     if (!selectedLoad) return;
     
     try {
+<<<<<<< HEAD
       await loadApplicationAPI.sendMessage(selectedLoad._id, message);
+=======
+      await loadAPI.sendMessage(selectedLoad._id, message);
+>>>>>>> 1667499bf92cea8b02211dbceb461822a9ce5ec0
       toast.success('Message sent successfully!');
     } catch (error: any) {
       console.error('Error sending message:', error);
@@ -265,7 +289,11 @@ export const MyLoadsPage: React.FC = () => {
 
   const handleSendMessageToVehicle = async (vehicleId: string, message: string) => {
     try {
+<<<<<<< HEAD
       await vehicleMatchingAPI.sendMessage(vehicleId, message , selectedLoad?._id || '');
+=======
+      await vehicleMatchingAPI.sendMessage(vehicleId, message, selectedLoad?._id || '');
+>>>>>>> 1667499bf92cea8b02211dbceb461822a9ce5ec0
       toast.success('Message sent successfully!');
     } catch (error: any) {
       console.error('Error sending message:', error);
@@ -516,6 +544,7 @@ export const MyLoadsPage: React.FC = () => {
                     {/* Actions */}
                     <div className="space-y-3">
                       {load.status === 'posted' && (
+<<<<<<< HEAD
                         <>
                           <div className="space-y-2">
                             <Button
@@ -540,6 +569,19 @@ export const MyLoadsPage: React.FC = () => {
                               Find Matching Vehicles
                             </Button>
                           </div>
+=======
+                        <div className="space-y-2">
+                          <Button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              navigate(`/load-matched-vehicles/${load._id}`);
+                            }}
+                            className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800"
+                            icon={<TruckIcon className="h-4 w-4" />}
+                          >
+                            Find Matching Vehicles
+                          </Button>
+>>>>>>> 1667499bf92cea8b02211dbceb461822a9ce5ec0
                           <Button
                             onClick={(e) => {
                               e.stopPropagation();
@@ -551,8 +593,12 @@ export const MyLoadsPage: React.FC = () => {
                           >
                             View Applications
                           </Button>
+<<<<<<< HEAD
                         </>
                         
+=======
+                        </div>
+>>>>>>> 1667499bf92cea8b02211dbceb461822a9ce5ec0
                       )}
                       
                       <div className="grid grid-cols-3 gap-2">
@@ -762,7 +808,11 @@ export const MyLoadsPage: React.FC = () => {
                                     <div key={photoIndex} className="relative group">
                                       <img
                                         src={photo.url}
+<<<<<<< HEAD
                                         alt={photo.publicId}
+=======
+                                        alt={photo.type}
+>>>>>>> 1667499bf92cea8b02211dbceb461822a9ce5ec0
                                         className="w-full h-20 object-cover rounded-lg border border-slate-200 group-hover:opacity-80 transition-opacity cursor-pointer"
                                       />
                                       <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 transition-all rounded-lg flex items-center justify-center">
@@ -985,6 +1035,7 @@ export const MyLoadsPage: React.FC = () => {
             fetchLoads();
           }}
         />
+<<<<<<< HEAD
 
         {/* Create Bidding Modal */}
         <CreateBiddingModal
@@ -997,6 +1048,8 @@ export const MyLoadsPage: React.FC = () => {
             toast.success('Bidding session created! Vehicle owners can now place bids.');
           }}
         />
+=======
+>>>>>>> 1667499bf92cea8b02211dbceb461822a9ce5ec0
       </div>
     </div>
   );

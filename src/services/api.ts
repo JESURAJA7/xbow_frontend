@@ -56,7 +56,11 @@ export const loadAPI = {
     api.post(`${API_BASE_URL}/loads`, data, config),
   getMyLoads: () => api.get(`${API_BASE_URL}/loads`),
   getAvailableLoads: (params?: any) => api.get('/loads/available', { params }),
+<<<<<<< HEAD
   getLoad: (id: string) => api.get(`${API_BASE_URL}/loads/${id}`),
+=======
+  getLoad: (id: string) => api.get(`/loads/${id}`),
+>>>>>>> 1667499bf92cea8b02211dbceb461822a9ce5ec0
   uploadMaterialPhotos: (loadId: string, materialIndex: number, formData: FormData) =>
   api.post(
     `${API_BASE_URL}/loads/materials/${materialIndex}/photos`,
@@ -103,6 +107,7 @@ export const loadAPI = {
 export const vehicleAPI = {
  createVehicle: (data: any, config = {}) =>
     api.post(`${API_BASE_URL}/vehicles`, data, config),
+<<<<<<< HEAD
  getVehicleOwnerProfile: (ownerId: any) => {
     // Extract the actual ID from the object
     let actualId: string;
@@ -135,6 +140,12 @@ export const vehicleAPI = {
     
     return api.get(`${API_BASE_URL}/vehicles/${actualId}`);
   },
+=======
+
+  getMyVehicles: () => api.get(`${API_BASE_URL}/vehicles`),
+  getAvailableVehicles: (params?: any) => api.get(`${API_BASE_URL}/vehicles/available`, { params }),
+  getVehicle: (id: string) => api.get(`${API_BASE_URL}/vehicles/${id}`),
+>>>>>>> 1667499bf92cea8b02211dbceb461822a9ce5ec0
   uploadVehiclePhotos: (vehicleId: string, photos: any[]) =>
     api.post(`/vehicles/${vehicleId}/photos`, { photos }),
   updateVehicleStatus: (vehicleId: string, status: string) =>
@@ -284,6 +295,7 @@ export const vehicleRequestAPI = {
     return api.post(`/vehicles/assignments/${assignmentId}/message`, { message });
   }
 };
+<<<<<<< HEAD
 
 export const biddingAPI = {
   // Bidding Session Management
@@ -371,4 +383,6 @@ export const biddingAPI = {
   getBiddingStats: () =>
     api.get(`${API_BASE_URL }/bidding/stats`)
 };
+=======
+>>>>>>> 1667499bf92cea8b02211dbceb461822a9ce5ec0
 export default api;

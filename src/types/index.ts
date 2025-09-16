@@ -346,6 +346,7 @@ export interface Rating {
   createdAt: string;
 }
 
+<<<<<<< HEAD
 export interface BiddingSession {
   _id: string;
   loadId: Load;
@@ -393,6 +394,8 @@ export interface TransportRequest {
 }
 
 
+=======
+>>>>>>> 1667499bf92cea8b02211dbceb461822a9ce5ec0
 export interface Message {
   _id: string;
   fromUserId: string;

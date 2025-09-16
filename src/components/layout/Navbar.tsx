@@ -13,7 +13,11 @@ import {
 } from '@heroicons/react/24/outline';
 import { useAuth } from '../../contexts/AuthContext';
 import { Button } from '../common/CustomButton';
+<<<<<<< HEAD
 import Logo from '../../assets/freeleft_logo.png';
+=======
+import Logo from '../../assets/WhatsApp Image 2025-09-08 at 00.16.58_e20dd409.jpg';
+>>>>>>> 1667499bf92cea8b02211dbceb461822a9ce5ec0
 
 export const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
