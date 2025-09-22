@@ -19,7 +19,16 @@ import { PODManagementPage } from './Admin/components/PODManagementPage';
 import { BiddingInfo } from './screens/Bidding/BiddingInfo';
 import { BiddingPage } from './screens/Bidding/BiddingPage';
 import { AdminApp } from './Admin/components/AdminApp';
-
+import { LoadMatchedVehiclesPage } from './screens/loadProvider/LoadMatchedVehiclesPage';
+import { AdminLogin } from './Admin/auth/AdminLogin';
+import { AdminRegister } from './Admin/auth/AdminRegister';
+import { AdminProtectedRoute } from './Admin/auth/AdminProtectedRoute';
+import { BiddingModal } from './screens/Bidding/BiddingModal';
+import { LiveBiddingPage } from './screens/Bidding/LiveBiddingPage';
+import { AnimatedFooter } from './components/layout/AnimatedFooter';
+import { BiddingMonitorPage } from './screens/Bidding/BiddingMonitorPage';
+import { LoadProgressPage } from './screens/Progress/LoadProgressPage';
+import { LoadProgressListPage } from './screens/Progress/LoadProgressListPage';
 // Protected Route Component
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { user, isLoading } = useAuth();
@@ -102,6 +111,7 @@ const AppContent: React.FC = () => {
             <ProtectedRoute>
               <Navbar />
               <DashboardRoute />
+              <AnimatedFooter />
             </ProtectedRoute>
           }
         />
@@ -121,6 +131,7 @@ const AppContent: React.FC = () => {
             <ProtectedRoute>
               <Navbar />
               <PostLoadPage />
+              <AnimatedFooter />
             </ProtectedRoute>
           }
         />
@@ -131,6 +142,7 @@ const AppContent: React.FC = () => {
             <ProtectedRoute>
               <Navbar />
               <AddVehiclePage />
+              <AnimatedFooter />
             </ProtectedRoute>
           }
         />
@@ -141,6 +153,7 @@ const AppContent: React.FC = () => {
             <ProtectedRoute>
               <Navbar />
               <SubscriptionPage />
+              <AnimatedFooter />
             </ProtectedRoute>
           }
         />
@@ -151,6 +164,7 @@ const AppContent: React.FC = () => {
             <ProtectedRoute>
               <Navbar />
               <MyLoadsPage />
+              <AnimatedFooter />
             </ProtectedRoute>
           }
         />
@@ -161,6 +175,7 @@ const AppContent: React.FC = () => {
             <ProtectedRoute>
               <Navbar />
               <FindLoadsPage />
+              <AnimatedFooter />
             </ProtectedRoute>
           }
         />
@@ -171,18 +186,20 @@ const AppContent: React.FC = () => {
             <ProtectedRoute>
               <Navbar />
               <MyVehiclesPage />
+              <AnimatedFooter />
             </ProtectedRoute>
           }
         />
 
-           <Route 
-          path="/pods" 
+        <Route
+          path="/pods"
           element={
             <ProtectedRoute>
               <Navbar />
               <PODManagementPage />
+              <AnimatedFooter />
             </ProtectedRoute>
-          } 
+          }
         />
 
         <Route
@@ -191,33 +208,108 @@ const AppContent: React.FC = () => {
             <ProtectedRoute>
               <Navbar />
               <BiddingInfo onBack={() => window.history.back()} />
+                <AnimatedFooter />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/bidding/:loadId"
+          element={
+            <ProtectedRoute>
+              <Navbar />
+                <BiddingPage />   
+                <AnimatedFooter />       
             </ProtectedRoute>
           }
         />
 
+          <Route
+          path="/live-bidding"
+          element={
+            <ProtectedRoute>
+              <Navbar />
+                <LiveBiddingPage />          
+            </ProtectedRoute>
+          }
+        />
         <Route
+          path="/load-progress/:loadId?"
+          element={
+            <ProtectedRoute>
+              <Navbar />
+                <LoadProgressPage />          
+                <AnimatedFooter />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/load-progress-list"
+          element={
+            <ProtectedRoute>
+              <Navbar />
+                <LoadProgressListPage />          
+                <AnimatedFooter />
+            </ProtectedRoute>
+          }
+        />
+
+
+        {/* <Route
           path="/bidding"
           element={
             <ProtectedRoute>
               <Navbar />
-              <BiddingPage onBack={() => window.history.back} />
+              <BiddingPage
+                load={null} // Replace null with the actual load object as needed
+                onBack={() => window.history.back()}
+                onVehicleSelect={() => {}} // Replace with actual handler if needed
+              />
             </ProtectedRoute>
+          }
+        /> */}
+
+        <Route path="/load-matched-vehicles/:loadId"
+          element={
+            <ProtectedRoute>
+              <Navbar />
+              <LoadMatchedVehiclesPage />
+              <AnimatedFooter />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="/bidding-monitor/:sessionId"
+          element={
+            <ProtectedRoute>
+              <Navbar />
+              <BiddingMonitorPage />
+              <AnimatedFooter />
+            </ProtectedRoute>
+          }
+        />
+
+          {/* ---------------- Admin Auth ---------------- */}
+        <Route path="/admin_login" element={<AdminLogin />} />
+        <Route path="/admin_register" element={<AdminRegister />} />
+
+        {/* ---------------- Admin Protected ---------------- */}
+        <Route
+          path="/admin/*"
+          element={
+            <AdminProtectedRoute>
+              <AdminApp />
+            </AdminProtectedRoute>
           }
         />
 
 
         {/* Default redirect */}
-        <Route path="/" element={<Navigate to="/dashboard" replace />} />
-        <Route path="*" element={<Navigate to="/dashboard" replace />} />
-    
+      
+  <Route path="/" element={<Navigate to="/login" replace />} />
+  <Route path="*" element={<Navigate to="/login" replace />} />
 
-       {/* Admin Routes */}
-        <Route path="/admin/*" element={<AdminApp />} />
+</Routes>
 
-        {/* Default redirect */}
-        <Route path="/" element={<Navigate to="/dashboard" replace />} />
-        <Route path="*" element={<Navigate to="/dashboard" replace />} />
-      </Routes>
+
     </div>
   );
 };
