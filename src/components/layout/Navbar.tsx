@@ -9,17 +9,12 @@ import {
   BellIcon,
   UserCircleIcon,
   ArrowRightOnRectangleIcon,
-  ShieldCheckIcon
+  ShieldCheckIcon,
+  ChevronDownIcon
 } from '@heroicons/react/24/outline';
 import { useAuth } from '../../contexts/AuthContext';
 import { Button } from '../common/CustomButton';
-
 import Logo from '../../assets/freeleft_logo.png';
-
-
-
-
-
 
 export const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -28,38 +23,47 @@ export const Navbar: React.FC = () => {
   const { user, logout } = useAuth();
   const location = useLocation();
 
+  // Close dropdowns when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as Element;
+      if (!target.closest('.profile-dropdown')) {
+        setIsProfileOpen(false);
+      }
+      if (!target.closest('.mobile-menu')) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   const navigation = user?.role === 'load_provider' 
     ? [
         { name: 'Dashboard', href: '/dashboard' },
         { name: 'Post Load', href: '/post-load' },
         { name: 'My Loads', href: '/my-loads' },
-        // { name: 'Payments', href: '/payments' },
         { name: 'Bidding', href: '/bidding-info' },
-        {name: 'Live Bidding', href: '/live-bidding'},
-
+        { name: 'Live Bidding', href: '/live-bidding' },
         { name: 'Load Progress', href: '/load-progress-list' },
-
       ]
     : [
         { name: 'Dashboard', href: '/dashboard' },
         { name: 'Find Loads', href: '/find-loads' },
         { name: 'Add Vehicle', href: '/add-vehicle' },
         { name: 'My Vehicles', href: '/my-vehicles' },
-
-        // { name: 'Payments', href: '/payments' },
         { name: 'Bidding', href: '/bidding-info' },
         { name: 'Live Bidding', href: '/live-bidding' },
         { name: 'Vehicle Progress', href: '/load-progress-list' },
-
-        { name: 'Payments', href: '/payments' },
-        { name: 'Bidding', href: '/bidding-info' },
-        { name: 'Live Bidding', href: '/live-bidding' },
-
       ];
 
   const handleLogout = () => {
     logout();
     setIsProfileOpen(false);
+    setIsMenuOpen(false);
   };
 
   // Restart animation when route changes
@@ -68,9 +72,9 @@ export const Navbar: React.FC = () => {
   }, [location.pathname]);
 
   return (
-    <nav className="bg-white/95 backdrop-blur-sm border-b border-slate-200 sticky top-0 z-50 overflow-hidden h-20">
+    <nav className="bg-white/95 backdrop-blur-sm border-b border-slate-200 sticky top-0 z-50">
       {/* Animated Truck Background */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      <div className="absolute inset-0 overflow-hidden pointer-events-none h-20">
         <motion.div
           key={animationKey}
           initial={{ x: '-100%' }}
@@ -89,7 +93,6 @@ export const Navbar: React.FC = () => {
               {/* Truck cabin */}
               <div className="relative z-10">
                 <TruckIcon className="h-8 w-12 text-blue-600" />
-               
               </div>
               
               {/* Container */}
@@ -113,7 +116,7 @@ export const Navbar: React.FC = () => {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="flex justify-between items-center h-16">
+        <div className="flex justify-between items-center h-20">
           {/* Logo */}
           <Link to="/dashboard" className="flex items-center space-x-3">
             <img src={Logo} alt="Free Left" className="h-[100px] w-[180px]" />
@@ -155,22 +158,23 @@ export const Navbar: React.FC = () => {
           </div>
 
           {/* Desktop User Menu */}
-          <div className="hidden md:flex items-center space-x-4 relative z-10">
+          <div className="hidden md:flex items-center space-x-4 relative">
             <button className="p-2 text-slate-600 hover:text-slate-900 rounded-lg hover:bg-slate-100/80 backdrop-blur-sm transition-colors">
               <BellIcon className="h-6 w-6" />
             </button>
             
             {user ? (
-              <div className="relative">
+              <div className="relative profile-dropdown">
                 <button
                   onClick={() => setIsProfileOpen(!isProfileOpen)}
-                  className="flex items-center space-x-3 p-2 rounded-lg hover:bg-slate-100/80 backdrop-blur-sm transition-colors"
+                  className="flex items-center space-x-3 p-2 rounded-lg hover:bg-slate-100/80 backdrop-blur-sm transition-colors border border-transparent hover:border-slate-200"
                 >
                   <div className="text-right">
                     <p className="text-sm font-medium text-slate-900">{user?.name}</p>
                     <p className="text-xs text-slate-600 capitalize">{user?.role?.replace('_', ' ')}</p>
                   </div>
                   <UserCircleIcon className="h-8 w-8 text-slate-600" />
+                  <ChevronDownIcon className={`h-4 w-4 text-slate-600 transition-transform ${isProfileOpen ? 'rotate-180' : ''}`} />
                 </button>
 
                 <AnimatePresence>
@@ -179,18 +183,20 @@ export const Navbar: React.FC = () => {
                       initial={{ opacity: 0, scale: 0.95, y: -10 }}
                       animate={{ opacity: 1, scale: 1, y: 0 }}
                       exit={{ opacity: 0, scale: 0.95, y: -10 }}
-                      className="absolute right-0 mt-2 w-48 bg-white/95 backdrop-blur-sm rounded-xl shadow-lg border border-slate-200 py-2"
+                      transition={{ duration: 0.15 }}
+                      className="absolute right-0 top-full mt-2 w-48 bg-white/95 backdrop-blur-sm rounded-xl shadow-lg border border-slate-200 py-2 z-50"
+                      style={{ position: 'fixed' }}
                     >
                       <Link
                         to="/profile"
-                        className="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50"
+                        className="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50/80 backdrop-blur-sm transition-colors"
                         onClick={() => setIsProfileOpen(false)}
                       >
                         Profile Settings
                       </Link>
                       <Link
                         to="/subscription"
-                        className="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50"
+                        className="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50/80 backdrop-blur-sm transition-colors"
                         onClick={() => setIsProfileOpen(false)}
                       >
                         Subscription
@@ -198,7 +204,7 @@ export const Navbar: React.FC = () => {
                       <hr className="my-2 border-slate-200" />
                       <button
                         onClick={handleLogout}
-                        className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 flex items-center space-x-2"
+                        className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50/80 backdrop-blur-sm flex items-center space-x-2 transition-colors"
                       >
                         <ArrowRightOnRectangleIcon className="h-4 w-4" />
                         <span>Sign Out</span>
@@ -219,10 +225,10 @@ export const Navbar: React.FC = () => {
           </div>
 
           {/* Mobile menu button */}
-          <div className="md:hidden relative z-10">
+          <div className="md:hidden relative z-10 mobile-menu">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="p-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100/80 backdrop-blur-sm"
+              className="p-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100/80 backdrop-blur-sm transition-colors"
             >
               {isMenuOpen ? (
                 <XMarkIcon className="h-6 w-6" />
@@ -241,14 +247,15 @@ export const Navbar: React.FC = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-white/95 backdrop-blur-sm border-t border-slate-200 relative z-50"
+            transition={{ duration: 0.2 }}
+            className="md:hidden bg-white/95 backdrop-blur-sm border-t border-slate-200 relative z-50 mobile-menu"
           >
             <div className="px-4 py-4 space-y-2">
               {navigation.map((item) => (
                 <Link
                   key={item.name}
                   to={item.href}
-                  className={`block px-3 py-2 rounded-lg text-base font-medium ${
+                  className={`block px-3 py-2 rounded-lg text-base font-medium transition-colors ${
                     location.pathname === item.href
                       ? 'text-blue-600 bg-blue-50/80 backdrop-blur-sm'
                       : 'text-slate-700 hover:text-slate-900 hover:bg-slate-50/80 backdrop-blur-sm'
@@ -260,18 +267,20 @@ export const Navbar: React.FC = () => {
               ))}
               
               {/* Admin Login Link in Mobile Menu */}
-              <Link
-                to="/admin"
-                className={`block px-3 py-2 rounded-lg text-base font-medium flex items-center ${
-                  location.pathname === '/admin'
-                    ? 'text-purple-600 bg-purple-50/80 backdrop-blur-sm'
-                    : 'text-slate-700 hover:text-purple-600 hover:bg-slate-50/80 backdrop-blur-sm'
-                }`}
-                onClick={() => setIsMenuOpen(false)}
-              >
-                <ShieldCheckIcon className="h-5 w-5 mr-2" />
-                Admin
-              </Link>
+              {(!user || user.role === 'admin') && (
+                <Link
+                  to="/admin"
+                  className={`block px-3 py-2 rounded-lg text-base font-medium flex items-center transition-colors ${
+                    location.pathname === '/admin'
+                      ? 'text-purple-600 bg-purple-50/80 backdrop-blur-sm'
+                      : 'text-slate-700 hover:text-purple-600 hover:bg-slate-50/80 backdrop-blur-sm'
+                  }`}
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  <ShieldCheckIcon className="h-5 w-5 mr-2" />
+                  Admin
+                </Link>
+              )}
               
               <hr className="my-4 border-slate-200" />
               {user ? (
@@ -280,15 +289,27 @@ export const Navbar: React.FC = () => {
                     <p className="text-sm font-medium text-slate-900">{user?.name}</p>
                     <p className="text-xs text-slate-600 capitalize">{user?.role?.replace('_', ' ')}</p>
                   </div>
-                  <Button
-                    onClick={handleLogout}
-                    variant="outline"
-                    size="sm"
-                    className="w-full mt-4"
-                    icon={<ArrowRightOnRectangleIcon className="h-4 w-4" />}
+                  <Link
+                    to="/profile"
+                    className="block px-3 py-2 rounded-lg text-base font-medium text-slate-700 hover:text-slate-900 hover:bg-slate-50/80 backdrop-blur-sm transition-colors"
+                    onClick={() => setIsMenuOpen(false)}
                   >
+                    Profile Settings
+                  </Link>
+                  <Link
+                    to="/subscription"
+                    className="block px-3 py-2 rounded-lg text-base font-medium text-slate-700 hover:text-slate-900 hover:bg-slate-50/80 backdrop-blur-sm transition-colors"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    Subscription
+                  </Link>
+                  <button
+                    onClick={handleLogout}
+                    className="w-full mt-4 px-4 py-2 text-red-600 hover:bg-red-50 rounded-lg text-base font-medium transition-colors flex items-center justify-center border border-red-200"
+                  >
+                    <ArrowRightOnRectangleIcon className="h-5 w-5 mr-2" />
                     Sign Out
-                  </Button>
+                  </button>
                 </>
               ) : (
                 <Link

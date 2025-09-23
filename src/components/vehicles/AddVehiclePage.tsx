@@ -51,8 +51,7 @@ export const AddVehiclePage: React.FC = () => {
     { type: 'back', file: null, preview: '' },
     { type: 'license', file: null, preview: '' },
     { type: 'rc_book', file: null, preview: '' },
-    { type: 'aadhaar_front', file: null, preview: '' },
-    { type: 'aadhaar_back', file: null, preview: '' },
+    { type: 'pancard', file: null, preview: '' },
     { type: 'optional', file: null, preview: '' }
   ]);
 
@@ -121,7 +120,7 @@ export const AddVehiclePage: React.FC = () => {
 
   const validateForm = (): boolean => {
     // Check required photos
-    const requiredPhotoTypes = ['front', 'side', 'back', 'license', 'rc_book', 'aadhaar_front', 'aadhaar_back'];
+    const requiredPhotoTypes = ['front', 'side', 'back', 'license', 'rc_book','pancard'];
     const uploadedRequiredPhotos = photos.filter(photo =>
       requiredPhotoTypes.includes(photo.type) && photo.file
     );

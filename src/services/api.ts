@@ -56,15 +56,9 @@ export const loadAPI = {
     api.post(`${API_BASE_URL}/loads`, data, config),
   getMyLoads: () => api.get(`${API_BASE_URL}/loads`),
   getAvailableLoads: (params?: any) => api.get('/loads/available', { params }),
-<<<<<<< HEAD
+
   getLoad: (id: string) => api.get(`${API_BASE_URL}/loads/${id}`),
-=======
-<<<<<<< HEAD
-  getLoad: (id: string) => api.get(`${API_BASE_URL}/loads/${id}`),
-=======
-  getLoad: (id: string) => api.get(`/loads/${id}`),
->>>>>>> 1667499bf92cea8b02211dbceb461822a9ce5ec0
->>>>>>> 17500d54e634740c8c7d5455bf576f6c41b42ed1
+
   uploadMaterialPhotos: (loadId: string, materialIndex: number, formData: FormData) =>
   api.post(
     `${API_BASE_URL}/loads/materials/${materialIndex}/photos`,
@@ -88,11 +82,11 @@ export const loadAPI = {
 
   // Get my applications (for vehicle owners)
   getMyApplications: () =>
-<<<<<<< HEAD
+
     api.get(`${API_BASE_URL}/vehicles/my-applications`),
-=======
-    api.get('/load-applications/my-applications'),
->>>>>>> 17500d54e634740c8c7d5455bf576f6c41b42ed1
+
+    
+
 
   // Accept/reject an application (for load providers)
   updateApplicationStatus: (applicationId: string, status: 'accepted' | 'rejected', message?: string) =>
@@ -115,10 +109,7 @@ export const loadAPI = {
 export const vehicleAPI = {
  createVehicle: (data: any, config = {}) =>
     api.post(`${API_BASE_URL}/vehicles`, data, config),
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> 17500d54e634740c8c7d5455bf576f6c41b42ed1
+
  getVehicleOwnerProfile: (ownerId: any) => {
     // Extract the actual ID from the object
     let actualId: string;
@@ -151,15 +142,12 @@ export const vehicleAPI = {
     
     return api.get(`${API_BASE_URL}/vehicles/${actualId}`);
   },
-<<<<<<< HEAD
-=======
-=======
 
-  getMyVehicles: () => api.get(`${API_BASE_URL}/vehicles`),
-  getAvailableVehicles: (params?: any) => api.get(`${API_BASE_URL}/vehicles/available`, { params }),
-  getVehicle: (id: string) => api.get(`${API_BASE_URL}/vehicles/${id}`),
->>>>>>> 1667499bf92cea8b02211dbceb461822a9ce5ec0
->>>>>>> 17500d54e634740c8c7d5455bf576f6c41b42ed1
+
+  // getMyVehicles: () => api.get(`${API_BASE_URL}/vehicles`),
+  // getAvailableVehicles: (params?: any) => api.get(`${API_BASE_URL}/vehicles/available`, { params }),
+  // getVehicle: (id: string) => api.get(`${API_BASE_URL}/vehicles/${id}`),
+
   uploadVehiclePhotos: (vehicleId: string, photos: any[]) =>
     api.post(`/vehicles/${vehicleId}/photos`, { photos }),
   updateVehicleStatus: (vehicleId: string, status: string) =>
@@ -180,18 +168,32 @@ export const podAPI = {
 
 
 export const profileAPI = {
-  getProfile: () => api.get('/profile'),
+  // Get profile
+  getProfile: () => api.get('/profile/profile'),
+
+  // Update profile
+  updateProfile: (profileData: any) => api.put('/profile/profile', profileData),
+
+  // Upload image
   uploadImage: (imageData: FormData) =>
-    api.post('/profile/image', imageData, {
+    api.post('/profile/upload-image', imageData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
     }),
-    
-  
-  updateProfile: (profileData: any) => api.put('/profile', profileData),
-  uploadDocuments: (documents: any[]) => api.post('/profile/documents', { documents }),
+
+  // Delete image
+  deleteImage: () => api.delete('/profile/delete-image'),
+
+  // Upload documents (⚠️ not present in backend yet)
+  uploadDocuments: (documents: any[]) =>
+    api.post('/profile/documents', { documents }),
+
+  // Get profile completion status (user-level)
   getCompletionStatus: () => api.get('/profile/completion-status'),
+
+  // Get completion stats (admin-level)
+  getCompletionStats: () => api.get('/profile/completion-stats'),
 };
 
 export const subscriptionAPI = {
@@ -317,10 +319,7 @@ export const vehicleRequestAPI = {
     return api.post(`/vehicles/assignments/${assignmentId}/message`, { message });
   }
 };
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> 17500d54e634740c8c7d5455bf576f6c41b42ed1
+
 
 export const biddingAPI = {
   // Bidding Session Management
@@ -408,7 +407,6 @@ export const biddingAPI = {
   getBiddingStats: () =>
     api.get(`${API_BASE_URL }/bidding/stats`)
 };
-<<<<<<< HEAD
 
 // NEW: Load Assignment API for working with the LoadAssignment model
 export const loadAssignmentAPI = {
@@ -441,8 +439,5 @@ export const loadAssignmentAPI = {
     api.put(`${API_BASE_URL}/load-assignments/${assignmentId}/complete`)
 };
 
-=======
-=======
->>>>>>> 1667499bf92cea8b02211dbceb461822a9ce5ec0
->>>>>>> 17500d54e634740c8c7d5455bf576f6c41b42ed1
+
 export default api;

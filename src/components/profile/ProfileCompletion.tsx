@@ -164,6 +164,7 @@ export const ProfileCompletion: React.FC = () => {
         toast.success('Profile updated successfully!');
         await refreshUser();
         await fetchCompletionStatus();
+        window.location.href = '/dashboard';
       }
     } catch (error: any) {
       toast.error(error.response?.data?.message || 'Failed to update profile');
